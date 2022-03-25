@@ -1,0 +1,57 @@
+[
+    {
+        "ID": "dd9227da-3bcd-42c5-a905-dd5c056e9e48",
+        "patientname": "Md.Nayem",
+        "gender": "male",
+        "patientage": "67",
+        "clinicname": "South Apollo",
+        "imageid": "123456",
+        "type": "pnumonia",
+        "date": "2022-03-26",
+        "doctorname": "Prof.Dr.Siddiqur Rahman"
+    },
+    {
+        "ID": "27c78e09-4d6e-46be-b17b-79059a8d989f",
+        "patientname": "Tawfiq Omar",
+        "gender": "male",
+        "patientage": "23",
+        "clinicname": "Rahat Anowar",
+        "imageid": "b2202385642",
+        "type": "covid19",
+        "date": "2022-03-31",
+        "doctorname": "Prof.Dr.Siddiqur Rahman"
+    },
+    {
+        "ID": "0ed3cebb-0d27-485a-a0e3-bb75b0e1e658",
+        "patientname": "Joynul Abedin",
+        "gender": "female",
+        "patientage": "76",
+        "clinicname": "South Apollo",
+        "imageid": "92538",
+        "type": "Undiagnosed",
+        "date": "2022-03-09",
+        "doctorname": "Dr.ab"
+    },
+    {
+        "ID": "83a49f69-7910-44fb-9ce4-c6f4ffe5b1d8",
+        "patientname": "Joynul Abedin",
+        "gender": "male",
+        "patientage": "34",
+        "clinicname": "South Apollo",
+        "imageid": "92538",
+        "type": "pnumonia",
+        "date": "2022-03-17",
+        "doctorname": "Prof.Dr.Siddiqur Rahman"
+    },
+    {
+        "ID": "daa94f4e-3bc4-4b9a-872f-c4652ccb2886",
+        "patientname": "Md.Abid Ahammed",
+        "gender": "male",
+        "patientage": "23",
+        "clinicname": "South Apollo",
+        "imageid": "220452",
+        "type": "Undiagnosed",
+        "date": "2022-03-09",
+        "doctorname": "Dr.ab"
+    }
+]

@@ -22,6 +22,14 @@ body{
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
+.t{
+  position: absolute;
+  top:40%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 100px;
+  font-weight: 500;
+}
 .show-btn1{
   background: #fff;
   padding: 10px 20px;
@@ -68,6 +76,7 @@ body{
   padding: 20px 60px 30px 40px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
 input[type="checkbox"]{
   display: none;
 }
@@ -172,7 +181,7 @@ input[type="checkbox"]{
 .button input[type="submit"]:hover{
   background: #5029bc;
 }
-.file-picker {
+#file-picker,#file-picker1,#file-picker2,#file-picker3,#file-picker4,#file-picker5 {
   background-color: indigo;
   color: white;
   padding: 0.5rem;
