@@ -10,28 +10,59 @@ from oauth2client.service_account import ServiceAccountCredentials
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 import boto3
+import win32api
+import json
 ##graph = tf.get_default_graph()
 ##import detection
 
 
 
+jsonfilename='pneumoniadatacollection.json'
+
+
 # define the scope
-scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+
+
+#scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+
+
 #SERVICE_ACCOUNT_FILE="helloworld.json"
 #SCOPES=['https://www.googleapis.com/auth/spreadsheets']
 # add credentials to the account
+
 #creds = None
-creds = ServiceAccountCredentials.from_json_keyfile_name('helloworld.json', scope)
+
+
+
+#creds = ServiceAccountCredentials.from_json_keyfile_name('helloworld.json', scope)
+
+
 #creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE,scopes=SCOPES)
 # authorize the clientsheet 
-client = gspread.authorize(creds)
+
+
+
+#client = gspread.authorize(creds)
+
+
 #SAMPLE_SPREADSHEET_ID='1yHu4XzDh3ZWZaDVSqdscWd5WhgtDnxoeQUlquXRWnqo'
 #service = build('sheets','v4',credentials=creds)
 
 # get the instance of the Spreadsheet
-sheet = client.open('PneumoniaDataCollection')
+
+
+
+#sheet = client.open('PneumoniaDataCollection')
+
+
 # get the first sheet of the Spreadsheet
-sheet_instance = sheet.get_worksheet(0)
+
+
+
+
+#sheet_instance = sheet.get_worksheet(0)
+
+
 #sheet=service.spreadsheets()
 
 
@@ -41,6 +72,7 @@ sheet_instance = sheet.get_worksheet(0)
 
 
 result = 0
+global checkData
 
 ##ml = detection.detectp()
      
@@ -85,27 +117,33 @@ def upload():
     target = os.path.join(APP_ROOT, 'images/')
     # target = os.path.join(APP_ROOT, 'static/')
     targetReport = os.path.join(APP_ROOT,'report/')
+    targetDoctor = os.path.join(APP_ROOT,'doctoroffice/')
     
     if not os.path.isdir(target):
             os.mkdir(target)
     if not os.path.isdir(targetReport):
             os.mkdir(targetReport)
+    if not os.path.isdir(targetDoctor):
+            os.mkdir(targetDoctor)
 
     # print(request.files.getlist("file"))
 
     for upload in request.files.getlist("file"):
         file_name = str(uuid4())
         print(file_name)
-        destination = "/".join([target, f'{file_name}.jpg,.dcm'])
+        destination = "/".join([target, f'{file_name}.dcm'])
         #s3 = boto3.client('s3')
         #s3.upload_file(f'{destination}','Bucket_Name',f'{file_name}.dcm')
         upload.save(destination)
     for uploadReport in request.files.getlist("file1"):
         destinationReport = "/".join([targetReport, f'{file_name}.jpg'])
         uploadReport.save(destinationReport)
+    for uploadDoctorOffice in request.files.getlist("file2"):
+        destinationDoctorOffice = "/".join([targetDoctor, f'{file_name}.jpg'])
+        uploadDoctorOffice.save(destinationDoctorOffice)
         
-    elements=[[file_name,paitentname,gender,paitentage,clinicname,imageid,type,date,doctorname]]
-    data=pd.DataFrame.from_dict(elements)
+    #elements=[[file_name,paitentname,gender,paitentage,clinicname,imageid,type,date,doctorname]]
+    #data=pd.DataFrame.from_dict(elements)
     # get all the records of the data
     #records_data = sheet_instance.get_all_records()
     # convert the json to dataframe
@@ -115,16 +153,38 @@ def upload():
     #recordhead=records_df.head()
     #result=sheet.values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID,range="PneumoniaDataCollection!A12",valueInputOption="RAW",body={"values":elements}).execute()
     #sheet_instance.insert_cols(data.values.tolist())
-    sheet_instance.append_rows(data.values.tolist())
+    #sheet_instance.append_rows(data.values.tolist())
     ##result = ml.detect(destination)
-    
-
-    return render_template("complete.html",result=round(result*100,3))
+    if os.path.getsize(jsonfilename) == 0:
+        nullentry = [{"ID":file_name,"patientname":paitentname,"gender":gender,"patientage":paitentage,"clinicname":clinicname,"imageid":imageid,"type":type,"date":date,"doctorname":doctorname}]
+        with open(jsonfilename,mode='w') as f:
+            json.dump(nullentry,f)
+    else:
+        with open(jsonfilename, "r+") as file:
+            data = json.load(file)
+            entry={"ID":file_name,"patientname":paitentname,"gender":gender,"patientage":paitentage,"clinicname":clinicname,"imageid":imageid,"type":type,"date":date,"doctorname":doctorname}
+        for element in data:
+            if(element['paitentname'] == entry['paitentname']):
+                checkData = "Not Found"
+                break
+            else:
+                checkData = "Found"
+                
+        if checkData == "Found":
+            data.append(entry)
+            with open(jsonfilename,'w') as file:
+                json.dump(data,file)
+        
+    return render_template("upload.html")
 
 
 @app.route("/upload")
 def send_image():
     return send_from_directory("images", "heatmap.png")
+
+@app.route("/view",methods=["POST"])
+def view():
+    return render_template("viewallrecord.html")
 
 if __name__ == "__main__":
     app.run(port=80)
