@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Pnumonia Detection </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" type="text/css">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/upload.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <meta name="google-site-verification" content="ruPP7Z-1iMcsvrbicR-wNJ79VHatSn1JepKnsDgSDlw" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div>
+    <!-- <input type="checkbox" id="show">
+        <label for="show" class="show-btn">Doctor</label> -->
+  <div class="container">
+    <!-- <label for="show" class="close-btn fas fa-times"></label> -->
+    <!--<form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data" name="google-sheet">-->
+    <form id="upload-form" action="{{ url_for('confirm') }}" method="POST" enctype="multipart/form-data" name="google-sheet">
+    <div class="content">
+      <div class="left-side">
+        <div class="address details">
+      <div>
+        <input id="file-picker" type="file" accept="image/*,*/dicom,.dcm, image/dcm, */dcm, .dicom" name="file" capture="camera" class="form-control"  onchange="loadFile(event)" hidden/>
+        <label id="file-picker" for="file-picker">Choose X-Ray</label>
+        <img id="output" width="200" />
+      </div>
+        <br>
+        <script>
+            var loadFile = function(event) {
+	          var image = document.getElementById('output');
+	          image.src = URL.createObjectURL(event.target.files[0]);
+            };
+            var loadReportFile = function(event) {
+	          var image = document.getElementById('output1');
+	          image.src = URL.createObjectURL(event.target.files[0]);
+            };
+            var loadDocFile = function(event) {
+	          var image = document.getElementById('output2');
+	          image.src = URL.createObjectURL(event.target.files[0]);
+            };
+            
+        </script>
+        </div>
+      </div>
+      <div class="right-side">
+        <div class="topic-text">Doctor Confirmation</div>
+        <div class="input-box">
+          <input id="imageid" type="text" name="imageid" placeholder="Enter clinic given ID" class="form-control" required>
+        </div>
+        <span>Diagnosis Class</span>
+        <select name="type" id="type" class="input-box">
+          <option value="Undiagnosed" selected>Not Diagnosed</option>
+          <option value="pnumonia">Pnumonia</option>
+          <option value="covid19">Covid 19</option>
+      </select>
+        <div class="button">
+          <input type="submit" value="confirm">
+        </div>
+      </form>
+    </div>
+    </div>
+  
+</body>
+</html>
+<!---->
