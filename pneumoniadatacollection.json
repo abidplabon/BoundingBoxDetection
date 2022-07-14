@@ -1,16 +1,5 @@
 [
          {
-                  "ID": "3e110c11-b5d7-422a-823f-35761e57a545",
-                  "clinicname": "South Apollo",
-                  "date": "2022-03-25",
-                  "doctorname": "Prof.Dr.Siddiqur Rahman",
-                  "gender": "male",
-                  "imageid": "b2202385642",
-                  "paitentname": "Tawfiq Omar Ahammed",
-                  "patientage": "45",
-                  "type": "Undiagnosed"
-         },
-         {
                   "ID": "5cdb6633-f107-4983-b282-5406f012c5b4",
                   "clinicname": "South Apollo",
                   "date": "2022-03-25",
@@ -29,6 +18,17 @@
                   "clinicname": "South Apollo",
                   "imageid": "344148",
                   "type": "diagnosed",
+                  "date": "2022-03-25",
+                  "doctorname": "Prof.Dr.Siddiqur Rahman"
+         },
+         {
+                  "ID": "3e110c11-b5d7-422a-823f-35761e57a545",
+                  "paitentname": "Tawfiq Omar Ahammed illahi",
+                  "gender": "male",
+                  "patientage": "45",
+                  "clinicname": "South Apollo",
+                  "imageid": "b2202385642",
+                  "type": "Undiagnosed",
                   "date": "2022-03-25",
                   "doctorname": "Prof.Dr.Siddiqur Rahman"
          }

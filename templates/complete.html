@@ -30,7 +30,48 @@
     }
   </script>
 <div style=" display:flex; justify-content: center ; margin-top: 25pt; ">
-Doctor's Diagnosis:
+  <div class="right-side">
+    <div class="topic-text">Enter Details of Paitent</div>
+    <div class="input-box">
+      <input id="paitentname" type="text" name="paitentname" placeholder="Enter paitent name" class="form-control" required>
+    </div>
+    <div>
+      <input type="radio" id="male" name="gender" value="male" class="form-control">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female" class="form-control">
+        <label for="female">Female</label>
+    </div>
+    <div class="input-box">
+      <input id="paitentage" type="number" name="paitentage" placeholder="Enter paitent age" class="form-control">
+    </div>
+    <select name="clinicname" id="clinicname" class="input-box">
+      <option value="South Apollo" selected>South Apollo</option>
+      <option value="Medinova">Medinova</option>
+      <option value="Rahat Anowar">Rahat Anowar</option>
+      <option value="Popular Diagnostic Center">Popular Diagnostic Center</option>
+      <option value="New Life Care Medical Services">New Life Care Medical Services</option>
+      <option value="Microlab Medical Services">Microlab Medical Services</option>
+      <option value="Labaid">Labaid</option>
+      <option value="Bellview">Bellview</option>
+  </select>
+    <div class="input-box">
+      <input id="imageid" type="text" name="imageid" placeholder="Enter clinic given ID" class="form-control" required>
+    </div>
+    <span>Diagnosis Class</span>
+    <select name="type" id="type" class="input-box">
+      <option value="Undiagnosed" selected>Not Diagnosed</option>
+      <option value="pnumonia">Pnumonia</option>
+      <option value="covid19">Covid 19</option>
+  </select>
+    <div class="input-box">
+      <input id="date" type="date" name="date" class="form-control" required>
+    </div>
+    <div class="input-box">
+      <input id="doctorname" type="text" name="doctorname" placeholder="Enter Refered Doctor name" class="form-control" required>
+    </div>
+<!--
+    Doctor's Diagnosis:
+-->
 <!--
     <form  style="display:flex;justify-content: center; padding-left: 50pt;">  
     <input type="checkbox" id="pneumoniaCheck" name="pneumoniaCheck" value="Pneumonia">
@@ -38,6 +79,7 @@ Doctor's Diagnosis:
     <input style="margin-left: 50pt;" type="submit" value="Confirm" onclick=confirmation()>
   </form>
 </div>-->
+<!--
   &nbsp
 <div class="col-2" style="text-align: center;">
   <div class="input-group">
@@ -60,7 +102,7 @@ Doctor's Diagnosis:
     <label for="pneumoniaCheck"> Pneumonia</label><br>
     <span style="color: red" id="Fno"></span>
   </div>
-</div>
+</div> -->
 <input style="margin-left: 50pt;" type="submit" value="Confirm" onclick=confirmation()>
 </div>
 

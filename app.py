@@ -1,4 +1,5 @@
-from curses import window
+
+
 import imp
 from multiprocessing.sharedctypes import Value
 import os
@@ -38,6 +39,10 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 @app.route("/")
 def index():
    return render_template("welcome.html")
+
+@app.route("/")
+def Complete():
+   return render_template("complete.html")
 
 @app.route('/index')
 def Index():
@@ -195,42 +200,48 @@ def detection():
 def detectResult():
     return render_template('complete.html')
 
+@app.route("/search/confirm",methods=['GET','POST'])
+def search():
+    # if request.method=='POST':
+    #     imageid= request.form.get("imageid")
+    #     return "The desired number "+imageid
+    obj = json.load(open("pneumoniadatacollection.json","r+"))
+    #     # print(imageid)
+    #     # for i in range(len(obj)):
+    #     #     if obj[i]['imageid']==imageid:
+    #     #         print("hello")
+    #     #     #return render_template('confirm.html')
+    # return render_template('confirm.html')
+    if request.method == "POST":
+       # getting input with name = fname in HTML form
+       first_name = request.form.get("imageid")
+       for i in range(len(obj)):
+           if obj[i]['imageid']==first_name:
+                print("hello")
+                return render_template("confirm.html")
+       # getting input with name = lname in HTML form
+       #last_name = request.form.get("lname")
+       
+    return render_template("search.html")
 
+# @app.route("/search/confirm/<imageid>")
+# def confirm():
+#     return render_template("confirm.html")
 
-
-@app.route("/confirm/imagesForDiagnosis",methods=["GET","POST"])
-def confirm():
-    # global id,paitentname,gender,patientage,clinicname,imagesid,type,date,doctorname
-    # imageid= request.form.get("imageid")
-    # obj = json.load(open("pneumoniadatacollection.json","r+"))
-    # for i in range(len(obj)):
-    #     if obj[i]['imageid']==imageid:
-    #         id=obj[i]['ID']
-    #         paitentname=obj[i]['paitentname']
-    #         gender=obj[i]['gender']
-    #         patientage=obj[i]['patientage']
-    #         clinicname=obj[i]['clinicname']
-    #         imagesid=obj[i]['imageid']
-    #         type=obj[i]['type']
-    #         date=obj[i]['date']
-    #         doctorname=obj[i]['doctorname']
-
-    #         obj.pop(i)
-    #         break
-
-    #     updatedList={"ID":id,"paitentname":paitentname,"gender":gender,"patientage":patientage,"clinicname":clinicname,"imageid":imagesid,"type":request.form.get("type"),"date":date,"doctorname":doctorname}
-    #     obj.append(updatedList)
-    #     with open('pneumoniadatacollection.json', 'w') as f:
-    #         f.write(json.dumps(obj, indent=9, separators=(',', ': ')))
-        return render_template('confirm.html')
-
-
-
-
-
-
-
+# @app.route("/search/confirm/<string:imageid>",methods=["GET","POST"])
+# def confirm(imageid):
+#     jsonFile = open("pneumoniadatacollection.json", "r+")
+#     data = json.load(jsonFile)
     
+#     for i in range(len(data)):
+#         if data[i]["imageid"]==imageid:
+#             record = data[i]
+#     jsonFile.close()
+#     return render_template('confirm.html',data= record)
+
+@app.route("/search")
+def searchID():
+    return render_template('search.html')
 
 @app .route("/upload")
 def send_image():
