@@ -1,6 +1,3 @@
-
-
-import imp
 from multiprocessing.sharedctypes import Value
 import os
 from time import time
@@ -10,19 +7,8 @@ from uuid import uuid4
 from flask import Flask, redirect, render_template, request,send_from_directory, url_for
 ##import tensorflow as tf
 global graph,model
-import gspread
-import pandas as pd
-from oauth2client.service_account import ServiceAccountCredentials
-from googleapiclient.discovery import build
-from google.oauth2 import service_account
-import boto3
 import json
 from tkinter import *
-from tkinter import messagebox
-import numpy as np
-import pydicom
-from PIL import Image
-import time
 ##graph = tf.get_default_graph()
 ##import detection
 
@@ -78,7 +64,6 @@ def update(id):
         for i in range(len(data)):
             if data[i]['ID']==id:
                 data.pop(i)
-                # print("Delete successful")
                 break
         entry={"ID":id,"paitentname":paitentname,"gender":gender,"patientage":patientage,"clinicname":clinicname,"imageid":imageid,"type":type,"date":date,"doctorname":doctorname}
         data.append(entry)
@@ -95,7 +80,6 @@ def delete(id):
     open("pneumoniadatacollection.json","w").write(
         json.dumps(obj,sort_keys=True,indent=4,separators=(',',':'))
     )
-    #flash('Employee Removed Successfully')
     return redirect(url_for('index'))
 
 
@@ -113,21 +97,13 @@ def form():
 @app.route("/upload", methods=["POST"])
 def upload():
     paitentname = request.form.get("paitentname")
-    #print(paitentname)
     gender = request.form.get("gender")
-    #print(gender)
     paitentage = request.form.get("paitentage")
-    #print(paitentage)
     clinicname=request.form.get("clinicname")
-    #print(clinicname)
     imageid= request.form.get("imageid")
-    #print(imageid)
     type=request.form.get("type")
-    #print(type)
     date=request.form.get("date")
-    #print(date)
     doctorname=request.form.get("doctorname")
-    #print(doctorname)
     
     
     # Image folder 
@@ -143,15 +119,10 @@ def upload():
             os.mkdir(targetReport)
     if not os.path.isdir(targetRep):
             os.mkdir(targetRep)
-
-    # print(request.files.getlist("file"))
-
     for upload in request.files.getlist("file"):
         file_name = str(uuid4())
         print(file_name)
         destination = "/".join([target, f'{file_name}.jpg,.dcm'])
-        #s3 = boto3.client('s3')
-        #s3.upload_file(f'{destination}','Bucket_Name',f'{file_name}.dcm')
         upload.save(destination)
     for uploadReport in request.files.getlist("file1"):
         destinationReport = "/".join([targetReport, f'{file_name}.jpg'])
@@ -170,11 +141,8 @@ def upload():
     else:
         with open(jsonfilename, "r+") as file:
             data = json.load(file)
-            
             entry={"ID":file_name,"paitentname":paitentname,"gender":gender,"patientage":paitentage,"clinicname":clinicname,"imageid":imageid,"type":type,"date":date,"doctorname":doctorname}
-            #print("First: "+entry['paitentname'])
         for element in data:
-            #print(element['paitentname'])
             if(element['paitentname'] == entry['paitentname'] and element['imageid'] == entry['imageid']):
                 checkData = "Not Found"
                 break
@@ -200,45 +168,20 @@ def detection():
 def detectResult():
     return render_template('complete.html')
 
-@app.route("/search/confirm",methods=['GET','POST'])
+@app.route("/confirm",methods=['GET','POST'])
 def search():
-    # if request.method=='POST':
-    #     imageid= request.form.get("imageid")
-    #     return "The desired number "+imageid
     obj = json.load(open("pneumoniadatacollection.json","r+"))
-    #     # print(imageid)
-    #     # for i in range(len(obj)):
-    #     #     if obj[i]['imageid']==imageid:
-    #     #         print("hello")
-    #     #     #return render_template('confirm.html')
-    # return render_template('confirm.html')
-    if request.method == "POST":
-       # getting input with name = fname in HTML form
-       first_name = request.form.get("imageid")
-       for i in range(len(obj)):
-           if obj[i]['imageid']==first_name:
-                print("hello")
-                return render_template("confirm.html")
-       # getting input with name = lname in HTML form
-       #last_name = request.form.get("lname")
-       
+    #if request.method == "POST":
+    imageid = request.form.get("imageid")
+    for i in range(len(obj)):
+        if obj[i]['imageid']==imageid:
+            record=obj[i]
+            print(record['ID'])
+            return render_template(url_for('confirm'),data=record)
     return render_template("search.html")
-
-# @app.route("/search/confirm/<imageid>")
-# def confirm():
-#     return render_template("confirm.html")
-
-# @app.route("/search/confirm/<string:imageid>",methods=["GET","POST"])
-# def confirm(imageid):
-#     jsonFile = open("pneumoniadatacollection.json", "r+")
-#     data = json.load(jsonFile)
-    
-#     for i in range(len(data)):
-#         if data[i]["imageid"]==imageid:
-#             record = data[i]
-#     jsonFile.close()
-#     return render_template('confirm.html',data= record)
-
+@app.route("/DoctorDiagnosis/<string:imageid>")
+def confirm(imageid):
+    return redirect(url_for('searchID'))
 @app.route("/search")
 def searchID():
     return render_template('search.html')

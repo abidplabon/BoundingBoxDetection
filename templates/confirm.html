@@ -11,13 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
 <body>
-  <div>
-    <!-- <input type="checkbox" id="show">
-        <label for="show" class="show-btn">Doctor</label> -->
+  <div> 
   <div class="container">
-    <!-- <label for="show" class="close-btn fas fa-times"></label> -->
-    <!--<form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data" name="google-sheet">-->
-    <form id="upload-form" action="/confirm/in" method="POST" enctype="multipart/form-data" name="google-sheet">
+    <form id="upload-form" action="/search" method="POST">
     <div class="content">
       <div class="left-side">
         <div class="address details">
@@ -27,27 +23,13 @@
         <img id="output" width="200" />
       </div>
         <br>
-        <script>
-            var loadFile = function(event) {
-	          var image = document.getElementById('output');
-	          image.src = URL.createObjectURL(event.target.files[0]);
-            };
-            var loadReportFile = function(event) {
-	          var image = document.getElementById('output1');
-	          image.src = URL.createObjectURL(event.target.files[0]);
-            };
-            var loadDocFile = function(event) {
-	          var image = document.getElementById('output2');
-	          image.src = URL.createObjectURL(event.target.files[0]);
-            };
-            
-        </script>
+        
         </div>
       </div>
       <div class="right-side">
         <div class="topic-text">Doctor Confirmation</div>
         <div class="input-box">
-          <input id="imageid" type="text" name="imageid" placeholder="Enter clinic given ID" class="form-control" required>
+          <input id="imageid" type="hidden" name="imageid" placeholder="Enter clinic given ID" class="form-control" required>
         </div>
         <span>Diagnosis Class</span>
         <select name="type" id="type" class="input-box">
@@ -64,4 +46,3 @@
   
 </body>
 </html>
-<!---->
